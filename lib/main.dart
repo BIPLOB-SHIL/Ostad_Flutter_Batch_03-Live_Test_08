@@ -31,16 +31,61 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  dynamic myItems = [
+    {"Name":"Biplob Shil","Email":"biplobshil.duet@gmail.com","Phone Number":01937089654},
+    {"Name":"Kamal Hossain","Email":"kamalhossin@gmail.com","Phone Number":01937089764},
+    {"Name":"Jamal Miah","Email":"jamal@gmail.com","Phone Number":01935439654},
+  ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Biplob Shil"),
+      appBar: AppBar(title: const Text("Contact List"),
+        centerTitle: true,
         backgroundColor: Colors.amber,
         elevation: 5,
       ),
-      body: Center(child: const Text("Body")),
+      body: ListView.builder(
+        scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.all(10),
+        itemCount: myItems.length,
+        itemBuilder: (context,index){
+          return ListTile(
+            onTap: (){
+              showTasksItemBottomSheet(index);
+            },
+              title: Text(myItems[index]['Name']),
+          );
+
+        },
+      ),
 
     );
+  }
+  void showTasksItemBottomSheet(int index){
+    showModalBottomSheet(context: context, builder: (context){
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child:  Text("Contract Details",style: TextStyle(fontWeight: FontWeight.bold),),
+            ),
+            Text("Name:${myItems[index]['Name']}"),
+            Text("Email:${myItems[index]['Email']}"),
+            Text("Phone Number:${myItems[index]['Phone Number']}"),
+
+
+          ],
+        ),
+      );
+    },);
+
   }
 }
 
